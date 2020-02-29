@@ -106,7 +106,7 @@ After one done the first preliminary set up steps, then is the time to move forw
 
 **4) Eloquent**
 
-In simple words allows calling built-in functions instead of writing complex queries. The Eloquent ORM included with **Laravel/Lumen** provides a beautiful, simple **ActiveRecord** implementation for working with the database. Each database table has a corresponding **Model** which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table. For example, one can say `Post::all()` to get all the blog posts inside posts table rather than writing `select * from posts`. Where Post in `Post::all() is a `model`.
+In simple words allows calling built-in functions instead of writing complex queries. The Eloquent ORM included with **Laravel/Lumen** provides a beautiful, simple **ActiveRecord** implementation for working with the database. Each database table has a corresponding **Model** which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table. For example, one can say `Author::all()` to get all the blog authors inside authors table rather than writing `select * from authors`. Where Author in `Author::all() is a `model`.
 
 Then to use **Eloquent** one will uncomment the `$app->withEloquent()`
 in your `bootstrap/app.php`
@@ -159,7 +159,7 @@ test actually.
 
 **Lumen** has a very fine way to create dummy data. It is called **Model Factories**. That uses [Faker](https://github.com/fzaninotto/Faker) package behind the scenes. Let's dive into.
 
-Inside `database/factories/ModelFactory.php` will define a factory for each table (1 only for posts table in this case). A factory is a suitable word because a factory creates object based on rules defined inside the factory.
+Inside `database/factories/ModelFactory.php` will define a factory for each table (1 only for authors table in this case). A factory is a suitable word because a factory creates object based on rules defined inside the factory.
 
 Now we need the a **seeder class** to call this factory to start creating objects and tell it a number to produce as well. So command `php artisan make:seeder AuthorsTableSeeder.
 
@@ -174,7 +174,7 @@ Example:
 
 **9) API end points**
 
-If we go to `routes/web.php` here is we define our endpoints/routes. For example if one wants to get all posts one will set an endpoint with `url posts/all`.
+If we go to `routes/web.php` here is we define our endpoints/routes. For example if one wants to get all authors one will set an endpoint with `url authors/all`.
 See the file. One used `Authors::all()` (in a callback function)
 which is **Eloquent** way to fetch all the results for a
 model which has also been discussed earlier.
@@ -182,7 +182,7 @@ model which has also been discussed earlier.
 Now if one hit the endpoint through **Postman** 
 Attached is a collection that can be imported to **Postman** 
 `Authors.postman_collection.json`
-or visit in browser`localhost/authors` one should see 50 authors posts in json.
+or visit in browser`localhost/authors` one should see 50 authors authors in json.
 
 # What to expect with the code
 - Standardized response format `ApiResponder.php`
