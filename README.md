@@ -26,27 +26,30 @@ Following the instructions one should be able to run this project or at least ha
 1. `git clone git@github.com:ahmedalaahagag/authors-microserivces.git`
 2. Rename `.env.example` file to `.env`. The
 .env file is the environment file that deals with project configurations like database credentials, api keys, debug mode, application keys etc and this file is out of version control.
-3. Set your application key to a random string. Typically, this string should be 32 characters long. In .env file it is called eg APP_KEY=akkfjvlakengoemvgkcgelapchyekci the same goes to
-ACCEPTED_SECRETS=akkfjvlakengoemvgkcgelapchyekci which is a key that should be sent with every API call to this project.
+3. Set your application key to a random string. Typically, this string should be 32 characters long. In .env file it is called eg 
+`APP_KEY=akkfjvlakengoemvgkcgelapchyekci`
+the same goes to `ACCEPTED_SECRETS`comma separated list of whitelisted keys`ACCEPTED_SECRETS=akkfjvlakengoemvgkcgelapchyekci,akkfjvlakengoemvgkcgelapchyekci`
+which is a key that should be sent with every API call to this project inside the request headers
+`Authorization:ECvSZ5O6P9x1GP1fvbtEVktoN358BofH`.
 4. Laradock clone it inside the project folder `git clone https://github.com/laradock/laradock.git`
 
 ## To run this project as a standalone project 
 5. `cd laradock`
 6. `cp env-example .env`
-7. `docker-compose up -d nginx mysq` => To start the server
+7. `docker-compose up -d nginx mysql phpmyadmin workspace` => To start the server
 8. `docker-compose exec workspace bash` => to get access to virtual machine and here one can execute any artisan command
 9. Run `composer install` => to install all php dependencies. This will create a vendor folder which is the core lumen framework
 10.  Inside `.env` file in the project root update `DB_HOST=mysql`
-11. With a SQL tool as `Sequel Pro` or similar connect to the MySQL to create a new DB. Or use the Docker MySQL workspace bash to use commands instead.
-12. Default values `username:root password:root host:mysql`
+11. With SQL tool as `PhpMyAdmin` which is already provided by **Laradock** at port `localhost:8080` or similar connect to the MySQL to create a new DB. Or use the Docker MySQL workspace bash to use commands instead.
+12. Default values ` host:mysql username:root password:root`
 13. Update database name and else in `.env`
 
-Remember all the the **Docker** commands have to be run it under **Laradock** folder as there the Docker files are placed.
+Remember all the **Docker** commands have to be run it under **Laradock** folder as there the Docker files are placed.
 
 If one wants to run this project as it is after `composer install` run migration as `php artisan migrate` to update the DB with the right tables. Then seed with `php artisan db:seed` to populate the DB with some fake data.
 
 ## Troubleshoot some possible issues
-It is possible one has issues with connecting to MySQL image of Docker. A possible solution as follow:
+It is possible one has issues with connecting to MySQL image of Docker. A possible solution as follows:
 
 From terminal
 ```
@@ -66,7 +69,7 @@ $ docker-compose up -d nginx mysql
 ```
 
 ## Tutorial
-How to create a **Simple Blog API**. Step by step explanations to get start with **Lumen**
+How to create a **Simple Authors API**. Step by step explanations to get start with **Lumen**
 
 **1) Create a Lumen project**
 
@@ -83,10 +86,10 @@ lumen new Authors
 
 **2) Clone Laradock inside the Authors folder project**
 
-The steps were showed above what to do with Laradock and Docker parts.
+The steps above shows what to do with Laradock and Docker parts.
 
 **3) Connect to the MySQL container**
-One can connect via a program like Sequel Pro or Navicat or else to the MySQL container. Then need to create the DB.
+One can connect via a program like PhpMyAdmin Pro or MysqlWorkBench or else to the MySQL container. Then need to create the DB.
 
 Example of a connection set up:
 ![connection_db](doc/Edit_Connection_Laradock__MySQL.png)
@@ -106,16 +109,18 @@ After one done the first preliminary set up steps, then is the time to move forw
 
 **4) Eloquent**
 
-In simple words allows calling built-in functions instead of writing complex queries. The Eloquent ORM included with **Laravel/Lumen** provides a beautiful, simple **ActiveRecord** implementation for working with the database. Each database table has a corresponding **Model** which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table. For example, one can say `Author::all()` to get all the blog authors inside authors table rather than writing `select * from authors`. Where Author in `Author::all() is a `model`.
+In simple words allows calling built-in functions instead of writing complex queries. 
+The Eloquent ORM includes **Laravel/Lumen** which provides a beautiful, simple **ActiveRecord** implementation for working with the database. 
+Each database table has a corresponding **Model** which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table. For example, one can say `Author::all()` to get all the blog authors inside authors table rather than writing `select * from authors`. Where Author in `Author::all() is a `model`.
 
-Then to use **Eloquent** one will uncomment the `$app->withEloquent()`
+Then to use **Eloquent**  uncomment the `$app->withEloquent()`
 in your `bootstrap/app.php`
 
 **5) Facades**
 
 A **facade** class is a wrapper around a few classes serving a particular purpose to make a series of steps required to perform a task in a single function call.
 
-Then i will uncomment the `$app->withFacades()` call inside `bootstrap/app.php` file to use **Laravel Facade**.
+Then uncomment the `$app->withFacades()` call inside `bootstrap/app.php` file to use **Laravel Facade**.
 
 **6) Authors**
 Then inside the **app** folder, will create `Author.php`. It is called a model in **MVC framework**. 
