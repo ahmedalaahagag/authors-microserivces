@@ -101,7 +101,7 @@ lumen new Authors
 The steps above shows what to do with Laradock and Docker parts.
 
 *3) Connect to the MySQL container*
-One can connect via a program like PhpMyAdmin Pro or MysqlWorkBench or else to the MySQL container. Then need to create the DB.
+One can connect via a program like PhpMyAdmin or MysqlWorkBench or else to the MySQL container. Then need to create the DB.
 
 Example of a connection set up:
 image:doc/Edit_Connection_Laradock__MySQL.png[connection_db]
@@ -209,4 +209,36 @@ or visit in browser`localhost/authors` one should see 50 authors authors in json
 * Standardized response format `ApiResponder.php`
 * `Secret Key` protected endpoints `AuthenticateAccess.php`
 * Standardized exception response format `Handler.php`
-* REST Based API format `web.php`
+* RESTful Based API format `web.php`
+
+= Response Example
+
+[source]
+----
+All APIs should be calls with Authorization header
+`Authorization`
+Which is the key provided in the .env file with the key `ACCEPTED_SECRETS`
+
+Get example
+
+API : GET localhost/authors/1
+Response :
+{
+    "data": {
+        "id": 1,
+        "name": "Rudy Dibbert",
+        "gender": "male",
+        "country": "Malaysia",
+        "created_at": "2020-02-27 15:46:04",
+        "updated_at": "2020-02-27 15:46:04"
+    }
+}
+
+Error example
+
+API : GET localhost/authors/1
+Response :
+{
+    "error": "Unauthorized"
+}
+----
